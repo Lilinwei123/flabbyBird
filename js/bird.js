@@ -22,32 +22,32 @@ var bird = {
         }
     },
 
-    dead: function () {
-        this.alive = false;
-    },
+    // dead: function () {
+    //     this.alive = false;
+    // },
 
     // 小鸟只是上下动，背景的重绘造成小鸟在向前飞的假象
-    fly: function () {
-        this.posY += this.speed;
-        this.speed++;
+    // fly: function () {
+    //     this.posY += this.speed;
+    //     this.speed++;
 
-        // 控制最快的加速度为6
-        if (this.speed > 6) {
-            this.speed = 6;
-        }
+    //     // 控制最快的加速度为6
+    //     if (this.speed > 6) {
+    //         this.speed = 6;
+    //     }
         
-        // 撞到天花板 
-        if (this.posY < 0) {
-            this.speed = 6;
-        }
+    //     // 撞到天花板 
+    //     if (this.posY < 0) {
+    //         this.speed = 6;
+    //     }
 
-        // 碰到地面
-        if (this.posY > 395) {
-            this.speed = 0;
-            this.draw(this.bird[index]);
-            this.dead();
-        }
+    //     // 碰到地面
+    //     if (this.posY > 395) {
+    //         this.speed = 0;
+    //         this.draw(this.bird[index]);
+    //         this.dead();
+    //     }
 
-        
-    }
+
+    // }
 };

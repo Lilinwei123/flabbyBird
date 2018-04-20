@@ -5,9 +5,11 @@ var ctx = canvas.getContext('2d');
 var v = 0; // 草坪滚动的增量
 var shake = false; // 记录标题的抖动状态
 var startTimer; // 开始界面定时器
-var startTimeCount = 0; // 定时器运行的次数
-var gameTimer;
-var gameTimeCount = 0;
+var startTimeCount = 0; // 开始界面定时器运行的次数
+var gameTimer; // 游戏界面定时器
+var gameTimeCount = 0; // 游戏界面定时器运行的次数
+var pipes = []; // 用来存放生成的水管
+var index = 0; //水管的下标
 
 // 初始化
 function init() {
@@ -51,11 +53,17 @@ function titleShake() {
     }
 }
 
-function createPipe() {  
+function createPipes() {
     var pipe = new Pipe(imgs.up_pipe, imgs.down_pipe, imgs.up_mod, imgs.down_mod);
 
-    pipe.drawPipe();
-    pipe.drawMod();
+    // 存放2个水管，如果已经有三个水管，则一次替换
+    if (pipes.length < 3) {
+        pipes.push(pipe);
+    } else {
+        pipes[index] = pipe;
+        index++;
+        if (index >= 3) index = 0;
+    }
 }
 
 // 绘制开始界面
@@ -78,10 +86,22 @@ function startLayor() {
 }
 
 function gameLayer() {
-    clean();
-    drawBg();
-    drawGrass();
-    createPipe();
+    gameTimer = setInterval(function () {
+        clean();
+        drawBg();
+        drawGrass();
+
+        if (gameTimeCount % 30 === 0) {
+            createPipes();
+            gameTimeCount = 0;
+        }
+
+        for (let j = 0; j < pipes.length; j++) {
+            pipes[j].move();
+        }
+
+        gameTimeCount++;
+    }, 24);
 }
 
 function startBtn_click(e) {
