@@ -40,6 +40,6 @@ class Pipe {
         this.posX -= 6;
         this.drawPipe();
         this.drawMod();
-        console.log(this.posX);
+        // console.log(this.posX);
     }
 }
