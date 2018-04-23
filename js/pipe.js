@@ -6,7 +6,7 @@ class Pipe {
         this.down_pipe = down_pipe;
         this.up_mod = up_mod;
         this.down_mod = down_mod;
-        this.up_height = Math.floor(Math.random()*60) * 3; // 随机生成组成上管体的mod的个数
+        this.up_height = Math.floor(Math.random()*60) * 3; // 随机生成组成上管体的mod
         // 将上下两个水管之间的距离定为120
         this.down_height = 183 - this.up_height;
         this.posX = 336;
@@ -40,6 +40,5 @@ class Pipe {
         this.posX -= 6;
         this.drawPipe();
         this.drawMod();
-        // console.log(this.posX);
     }
 }

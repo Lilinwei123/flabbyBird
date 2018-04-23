@@ -107,8 +107,45 @@ function gameLayer() {
             bird.wingWave();
         // 绘制小鸟 
         bird.fly();
+        isHit();
         gameTimeCount++;
+
+        // alive为false
+        if (!bird.alive) {
+            gameOver();
+            reset();
+        }
     }, 36);
+}
+
+// 游戏结束，重绘页面，清除计时器、响应事件
+function gameOver() {
+    //清除定时器
+    clearInterval(gameTimer);
+    //清除窗口响应事件
+    // window.removeEventListener('keydown',kd,false);
+    window.removeEventListener('touchstart',ts,false);
+
+    // //绘制GAME OVER
+    var gradient=ctx.createLinearGradient(0 ,0, canvas.width, 0);
+    gradient.addColorStop("0", "magenta");
+    gradient.addColorStop("0.5", "blue");
+    gradient.addColorStop("1.0", "red");
+    // 用渐变填色
+    ctx.fillStyle=gradient;
+    ctx.font = "50px blod";
+    ctx.fontWeight = '1000';
+    ctx.fillText("GAME OVER", 20, 200);
+    drawStartBtn();
+}
+
+// 重置数据
+function reset() {
+    // bird.posY = 200;
+    // bird.speed = 0;
+    // bird.alive = true;
+    // pipes = [];
+    canvas.addEventListener('click', startBtn_click, false);
 }
 
 function startBtn_click(e) {
@@ -123,9 +160,27 @@ function startBtn_click(e) {
         gameLayer();
         //添加响应事件
         // window.addEventListener('keydown', kd, false)
-        // window.addEventListener('touchstart', ts, false)
+        // 触屏事件
+        window.addEventListener('touchstart', ts, false);
         //删除start按钮响应事件
         canvas.removeEventListener('click', startBtn_click, false);
+    }
+}
+
+// 点击屏幕是小鸟向上飞，速度－10
+function ts () {
+    bird.speed = -10;
+}
+
+// 判断小鸟是否撞击
+function isHit() {
+    for (let i = 0; i < pipes.length; i++) {
+        // 判断小鸟的横向位置和纵向值进行判断
+        if (bird.posX + 38 > pipes[i].posX && bird.posX < pipes[i].posX + pipes[i].down_pipe.width) {
+            if (bird.posY < pipes[i].up_posY + pipes[i].up_pipe.height || bird.posY + 28 > pipes[i].down_posY) {
+                bird.dead();
+            }
+        }
     }
 }
 
