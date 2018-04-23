@@ -91,15 +91,22 @@ function gameLayer() {
         drawBg();
         drawGrass();
 
+        // 每30次生成一个新的水管
         if (gameTimeCount % 30 === 0) {
             createPipes();
             gameTimeCount = 0;
         }
 
+        // 每次水管都移动
         for (let j = 0; j < pipes.length; j++) {
             pipes[j].move();
         }
 
+        // 记录小鸟两种状态的下边
+        if (gameTimeCount % 5 === 0) 
+            bird.wingWave();
+        // 绘制小鸟 
+        bird.fly();
         gameTimeCount++;
     }, 36);
 }
