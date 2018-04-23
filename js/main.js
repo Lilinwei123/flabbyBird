@@ -101,7 +101,7 @@ function gameLayer() {
         }
 
         gameTimeCount++;
-    }, 24);
+    }, 36);
 }
 
 function startBtn_click(e) {
